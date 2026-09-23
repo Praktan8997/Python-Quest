@@ -25,13 +25,15 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGINS
-        # After frontend deploys, update this to the actual frontend URL
-        # e.g. https://python-quest-frontend.onrender.com
-        value: "https://python-quest-frontend.onrender.com"
+        fromService:
+          type: web
+          name: python-quest-frontend
+          envVarKey: RENDER_EXTERNAL_URL
       - key: CODE_EXECUTION_URL
-        # Will be updated after execution service is deployed
-        # Format: https://python-quest-execution.onrender.com/run
-        value: "https://python-quest-execution.onrender.com/run"
+        fromService:
+          type: web
+          name: python-quest-execution
+          envVarKey: RENDER_EXTERNAL_URL
 
   # ─── Code Execution Service ───────────────────────────────────────────────────
   - type: web
@@ -47,8 +49,10 @@ services:
       - key: PYTHON_VERSION
         value: "3.11.0"
       - key: ALLOWED_ORIGINS
-        # Restrict to backend domain for security
-        value: "https://python-quest-backend.onrender.com"
+        fromService:
+          type: web
+          name: python-quest-backend
+          envVarKey: RENDER_EXTERNAL_URL
 
   # ─── Frontend Static Site ────────────────────────────────────────────────────
   - type: web
@@ -67,7 +71,10 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        value: "https://python-quest-backend.onrender.com"
+        fromService:
+          type: web
+          name: python-quest-backend
+          envVarKey: RENDER_EXTERNAL_URL
 
 # ─── PostgreSQL Database ─────────────────────────────────────────────────────
 databases:

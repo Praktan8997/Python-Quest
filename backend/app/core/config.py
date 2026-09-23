@@ -25,8 +25,12 @@ class Settings:
         raw = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173")
         return [o.strip() for o in raw.split(",") if o.strip()]
 
-    # Execution Service
-    CODE_EXECUTION_URL: str = os.getenv("CODE_EXECUTION_URL", "http://127.0.0.1:8001/run")
+    @property
+    def CODE_EXECUTION_URL(self) -> str:
+        url = os.getenv("CODE_EXECUTION_URL", "http://127.0.0.1:8001/run")
+        if not url.endswith("/run"):
+            url = f"{url.rstrip('/')}/run"
+        return url
 
 
 settings = Settings()
