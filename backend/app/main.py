@@ -17,15 +17,16 @@ from app.models.models import Topic
 try:
     db = SessionLocal()
     # Check if we have any topics
-    if db.query(Topic).count() == 0:
+    is_empty = db.query(Topic).count() == 0
+    db.close()  # Close the connection immediately to release any locks
+    
+    if is_empty:
         print("Database is empty. Auto-running seed script...")
         seed_script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "database", "seed_data.py"))
         if os.path.exists(seed_script_path):
             # Run the seed script as a subprocess (it will pick up DATABASE_URL)
-            # Pass a special arg or just run it. We will run it as is, which drops and recreates tables.
             subprocess.run([sys.executable, seed_script_path])
             print("Database auto-seeding completed.")
-    db.close()
 except Exception as e:
     print(f"Warning: Error checking/seeding database: {e}")
 
