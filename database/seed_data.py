@@ -21,9 +21,11 @@ sys.path.insert(0, backend_path)
 from app.core.database import SessionLocal, engine, Base
 from app.models.models import Topic, Lesson, Challenge, ChallengeTestCase, Quiz, QuizQuestion, QuizOption, Badge, UserProgress, XPTransaction, QuizAttempt, QuizAnswer, Submission, User
 
-def seed():
-    print("Recreating database tables...")
-    Base.metadata.drop_all(bind=engine)
+def seed(drop_tables: bool = True):
+    if drop_tables:
+        print("Recreating database tables...")
+        Base.metadata.drop_all(bind=engine)
+    
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
 
@@ -1766,5 +1768,5 @@ if __name__ == "__main__":
     print(f"{'='*60}")
     print(f"Target database: {db_url[:40]}..." if len(db_url) > 40 else f"Target database: {db_url}")
     print(f"{'='*60}\n")
-    seed()
-    print("\n✅ Seeding complete!")
+    seed(drop_tables=True)
+    print("\n[SUCCESS] Seeding complete!")
