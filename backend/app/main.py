@@ -16,19 +16,26 @@ from app.models.models import Topic
 
 try:
     db = SessionLocal()
-    # Check if we have any topics
     is_empty = db.query(Topic).count() == 0
-    db.close()  # Close the connection immediately to release any locks
+    db.close()
     
     if is_empty:
-        print("Database is empty. Auto-running seed script...")
-        seed_script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "database", "seed_data.py"))
-        if os.path.exists(seed_script_path):
-            # Run the seed script as a subprocess (it will pick up DATABASE_URL)
-            subprocess.run([sys.executable, seed_script_path])
-            print("Database auto-seeding completed.")
+        print("Database is empty. Auto-running seed script...", flush=True)
+        # Import seed function directly to avoid subprocess pool deadlocks
+        import sys, os
+        seed_script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "database"))
+        if seed_script_dir not in sys.path:
+            sys.path.insert(0, seed_script_dir)
+        
+        try:
+            from seed_data import seed
+            # Run without dropping tables to avoid locking issues on startup
+            seed(drop_tables=False)
+            print("Database auto-seeding completed.", flush=True)
+        except ImportError as ie:
+            print(f"Could not import seed module: {ie}", flush=True)
 except Exception as e:
-    print(f"Warning: Error checking/seeding database: {e}")
+    print(f"Warning: Error checking/seeding database: {e}", flush=True)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
