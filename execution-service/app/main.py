@@ -3,16 +3,27 @@ import subprocess
 import tempfile
 import os
 import time
-from typing import List, Optional, Dict, Any
+from dotenv import load_dotenv
+from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+# Load .env for local development
+load_dotenv()
+
 app = FastAPI(title="Python Quest Isolated Execution Service")
+
+# CORS — restrict to backend domain in production; allow all in local dev
+_raw_origins = os.getenv("ALLOWED_ORIGINS", "*")
+if _raw_origins == "*":
+    allowed_origins = ["*"]
+else:
+    allowed_origins = [o.strip() for o in _raw_origins.split(",") if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,7 +35,7 @@ class TestCase(BaseModel):
 
 class ExecutionRequest(BaseModel):
     code: str
-    timeout: Optional[float] = 3.0
+    timeout: Optional[float] = 5.0
     test_cases: Optional[List[TestCase]] = None
 
 class TestCaseResult(BaseModel):
@@ -55,7 +66,7 @@ def run_code(req: ExecutionRequest):
 
     try:
         start_time = time.time()
-        
+
         # Simple run without test cases
         if not req.test_cases:
             try:
@@ -85,7 +96,7 @@ def run_code(req: ExecutionRequest):
                     error="Time Limit Exceeded"
                 )
 
-        # Run test cases
+        # Run with test cases
         test_results = []
         all_passed = True
         overall_stdout = ""

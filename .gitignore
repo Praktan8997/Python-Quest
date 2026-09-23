@@ -22,10 +22,11 @@ dist-ssr/
 *.local
 .nx/
 
-# Environment & Secrets
+# Environment & Secrets — ignore actual secret files, but allow .env.example and .env.production
 .env
-.env.production
 .env.local
+# Note: .env.production is intentionally committed (contains only public URLs, no secrets)
+# Note: .env.example is intentionally committed (template for developers)
 
 # IDE & OS
 .vscode/

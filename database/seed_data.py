@@ -1,6 +1,19 @@
 import os
 import sys
 
+# ─── Load environment variables ───────────────────────────────────────────────
+# Supports: DATABASE_URL env var to seed any database (SQLite or PostgreSQL)
+# Usage for production seeding:
+#   $env:DATABASE_URL = "postgresql://user:pass@host/dbname"  (PowerShell)
+#   DATABASE_URL="postgresql://..." python seed_data.py       (Linux/Mac)
+try:
+    from dotenv import load_dotenv
+    # Load from backend/.env first (for local dev), then database/.env
+    load_dotenv(os.path.join(os.path.dirname(__file__), '..', 'backend', '.env'))
+    load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
+except ImportError:
+    pass  # dotenv not required if DATABASE_URL is set directly in environment
+
 # Add backend directory to path
 backend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'backend'))
 sys.path.insert(0, backend_path)
@@ -1747,4 +1760,11 @@ def seed():
         db.close()
 
 if __name__ == "__main__":
+    db_url = os.getenv("DATABASE_URL", "sqlite:///./python_quest.db")
+    print(f"\n{'='*60}")
+    print(f"Python Quest Database Seeder")
+    print(f"{'='*60}")
+    print(f"Target database: {db_url[:40]}..." if len(db_url) > 40 else f"Target database: {db_url}")
+    print(f"{'='*60}\n")
     seed()
+    print("\n✅ Seeding complete!")
