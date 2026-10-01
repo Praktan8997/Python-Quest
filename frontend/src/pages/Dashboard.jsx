@@ -79,7 +79,7 @@ export const Dashboard = () => {
                 <div className="flex items-center justify-between text-xs font-mono">
                   <span className="text-[#8AA4C4]">Level {user?.level || 1} Progression</span>
                   <span className="text-[#F0F6FF] font-bold">
-                    {progressSummary.xp_level_percentage}% ({progressSummary.xp_to_next_level} XP needed)
+                    {progressSummary.xp_level_percentage}%
                   </span>
                 </div>
                 <div className="w-full bg-[rgba(186,214,247,0.06)] rounded-full h-2.5 overflow-hidden border border-[rgba(186,215,247,0.12)] p-0.5">
@@ -98,10 +98,7 @@ export const Dashboard = () => {
               <span className="block text-3xl font-heading font-bold text-[#F0F6FF]">{user?.level || 1}</span>
               <span className="font-eyebrow text-[9px] text-[#526884] uppercase tracking-widest mt-1 block">LEVEL</span>
             </div>
-            <div className="text-center px-4 border-r border-[rgba(186,215,247,0.12)]">
-              <span className="block text-3xl font-heading font-bold text-[#C8DCF5]">{user?.xp || 0}</span>
-              <span className="font-eyebrow text-[9px] text-[#526884] uppercase tracking-widest mt-1 block">TOTAL XP</span>
-            </div>
+
             <div className="text-center px-4">
               <span className="block text-3xl font-heading font-bold text-[#F0F6FF] flex items-center justify-center gap-1">
                 <Flame className="w-6 h-6 text-[#663af3] fill-[#663af3]" /> {user?.current_streak || 1}

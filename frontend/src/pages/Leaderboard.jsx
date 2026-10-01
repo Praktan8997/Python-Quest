@@ -38,7 +38,7 @@ export const Leaderboard = () => {
           Bootcamp Hall of Fame
         </h1>
         <p className="text-[#8AA4C4] text-sm max-w-xl mx-auto leading-relaxed font-sans">
-          Compete with fellow bootcamp students, gain XP, and climb the leaderboard ranks!
+          Compete with fellow bootcamp students and climb the leaderboard ranks!
         </p>
       </div>
 
@@ -52,7 +52,7 @@ export const Leaderboard = () => {
                 2
               </div>
               <h3 className="font-bold text-[#F0F6FF] text-sm truncate">{top3[1].username}</h3>
-              <p className="text-xs font-extrabold text-[#C8DCF5]">{top3[1].xp} XP</p>
+
               <span className="text-[11px] font-mono text-[#8AA4C4] block">Lvl {top3[1].level}</span>
             </div>
           )}
@@ -67,7 +67,7 @@ export const Leaderboard = () => {
                 1
               </div>
               <h3 className="font-extrabold text-[#F0F6FF] text-base truncate font-heading">{top3[0].username}</h3>
-              <p className="text-sm font-black text-amber-300">{top3[0].xp} XP</p>
+
               <span className="text-xs font-mono text-[#8AA4C4] block">Lvl {top3[0].level}</span>
             </div>
           )}
@@ -79,7 +79,7 @@ export const Leaderboard = () => {
                 3
               </div>
               <h3 className="font-bold text-[#F0F6FF] text-sm truncate">{top3[2].username}</h3>
-              <p className="text-xs font-extrabold text-[#C8DCF5]">{top3[2].xp} XP</p>
+
               <span className="text-[11px] font-mono text-[#8AA4C4] block">Lvl {top3[2].level}</span>
             </div>
           )}
@@ -131,10 +131,7 @@ export const Leaderboard = () => {
                     <Flame className="w-4 h-4 fill-amber-400" />
                     <span>{lb.streak}d</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[#C8DCF5] font-extrabold text-sm min-w-[80px] justify-end font-mono">
-                    <Zap className="w-4 h-4 text-[#663af3]" />
-                    <span>{lb.xp} XP</span>
-                  </div>
+
                 </div>
               </div>
             );

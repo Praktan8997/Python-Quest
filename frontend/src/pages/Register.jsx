@@ -52,7 +52,7 @@ export const Register = () => {
             Join Python Quest
           </h2>
           <p className="text-xs text-[#8AA4C4] font-sans">
-            Create your account to start earning XP & leveling up
+            Create your account to start your journey & leveling up
           </p>
         </div>
 

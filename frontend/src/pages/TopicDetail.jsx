@@ -324,9 +324,6 @@ export const TopicDetail = () => {
                     <span className="text-xs font-mono uppercase tracking-wider text-[#8AA4C4] bg-[rgba(186,214,247,0.04)] px-3 py-1 rounded-badge border border-[rgba(186,215,247,0.14)]">
                       Difficulty: {currentChallenge.difficulty}
                     </span>
-                    <span className="text-xs font-mono font-bold text-[#F0F6FF] flex items-center gap-1">
-                      <Zap className="w-4 h-4 text-[#663af3] fill-[#663af3]" /> +{currentChallenge.xp_reward} XP
-                    </span>
                   </div>
 
                   <h2 className="text-2xl font-heading font-semibold text-[#F0F6FF]">{currentChallenge.title}</h2>
@@ -375,12 +372,9 @@ export const TopicDetail = () => {
                     <span className="flex items-center gap-2">
                       {submitResult.passed ? <CheckCircle2 className="w-4 h-4 text-[#F0F6FF]" /> : <XCircle className="w-4 h-4 text-red-400" />}
                       {submitResult.passed
-                        ? (submitResult.is_dry_run ? 'Dry Run Passed! (Submit to earn XP)' : 'Challenge Solved! Correct 🎉')
+                        ? (submitResult.is_dry_run ? 'Dry Run Passed! (Submit to complete)' : 'Challenge Solved! Correct 🎉')
                         : 'Tests Failed — Keep Trying!'}
                     </span>
-                    {!submitResult.is_dry_run && submitResult.xp_gained > 0 && (
-                      <span className="text-[#663af3] font-bold">+ {submitResult.xp_gained} XP</span>
-                    )}
                   </div>
 
                   {submitResult.stdout && (
@@ -456,9 +450,7 @@ export const TopicDetail = () => {
                   <h2 className="text-2xl font-heading font-semibold text-[#F0F6FF]">{currentQuiz.title}</h2>
                   <p className="text-xs text-[#8AA4C4] font-sans mt-1">Answer all {currentQuiz.questions.length} questions to complete the module quiz!</p>
                 </div>
-                <span className="text-xs font-mono text-[#F0F6FF] bg-[rgba(186,214,247,0.06)] px-3.5 py-1.5 rounded-badge border border-[rgba(186,215,247,0.14)]">
-                  +{currentQuiz.xp_reward} XP
-                </span>
+
               </div>
 
               {/* Question List */}
@@ -598,11 +590,7 @@ export const TopicDetail = () => {
                     </span>
                   </div>
 
-                  {quizResult.xp_gained > 0 && (
-                    <div className="p-4 bg-[#663af3]/15 border border-[#663af3]/30 rounded-badge text-[#F0F6FF] text-xs font-bold flex items-center gap-2">
-                      <Zap className="w-4 h-4 text-[#663af3] fill-[#663af3]" /> You earned +{quizResult.xp_gained} XP!
-                    </div>
-                  )}
+
 
                   <div className="space-y-3 pt-2">
                     {quizResult.feedback.map((fb, i) => (
@@ -636,7 +624,7 @@ export const TopicDetail = () => {
                           </span>
                           <span className="text-[#526884] text-[11px]">{new Date(att.created_at).toLocaleString()}</span>
                         </div>
-                        {att.xp_gained > 0 && <span className="text-[#663af3] font-bold">+{att.xp_gained} XP</span>}
+
                       </div>
                     ))}
                   </div>
