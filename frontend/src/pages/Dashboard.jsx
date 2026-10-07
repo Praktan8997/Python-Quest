@@ -73,39 +73,10 @@ export const Dashboard = () => {
               Execute isolated Python code challenges, pass comprehensive quizzes, and elevate your bootcamp engineering rank.
             </p>
 
-            {/* Level Progression */}
-            {progressSummary && (
-              <div className="pt-2 max-w-lg space-y-2.5">
-                <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-[#8AA4C4]">Level {user?.level || 1} Progression</span>
-                  <span className="text-[#F0F6FF] font-bold">
-                    {progressSummary.xp_level_percentage}%
-                  </span>
-                </div>
-                <div className="w-full bg-[rgba(186,214,247,0.06)] rounded-full h-2.5 overflow-hidden border border-[rgba(186,215,247,0.12)] p-0.5">
-                  <div
-                    className="bg-[#663af3] h-full rounded-full transition-all duration-1000 shadow-[0_0_12px_#663af3]"
-                    style={{ width: `${progressSummary.xp_level_percentage}%` }}
-                  />
-                </div>
-              </div>
-            )}
+
           </div>
 
-          {/* User Live Stats Glass Plate */}
-          <div className="flex items-center gap-4 bg-[rgba(186,214,247,0.04)] border border-[rgba(186,215,247,0.14)] p-6 rounded-card shadow-glass-elevation shrink-0">
-            <div className="text-center px-4 border-r border-[rgba(186,215,247,0.12)]">
-              <span className="block text-3xl font-heading font-bold text-[#F0F6FF]">{user?.level || 1}</span>
-              <span className="font-eyebrow text-[9px] text-[#526884] uppercase tracking-widest mt-1 block">LEVEL</span>
-            </div>
 
-            <div className="text-center px-4">
-              <span className="block text-3xl font-heading font-bold text-[#F0F6FF] flex items-center justify-center gap-1">
-                <Flame className="w-6 h-6 text-[#663af3] fill-[#663af3]" /> {user?.current_streak || 1}
-              </span>
-              <span className="font-eyebrow text-[9px] text-[#526884] uppercase tracking-widest mt-1 block">STREAK</span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -206,34 +177,6 @@ export const Dashboard = () => {
           </div>
         )}
 
-        {/* Recent Submissions */}
-        {progressSummary?.recent_submissions?.length > 0 && (
-          <div className="authkit-glass-card p-8 space-y-5 rounded-card">
-            <h3 className="text-lg font-heading font-semibold text-[#F0F6FF] flex items-center gap-2.5">
-              <History className="w-5 h-5 text-[#8AA4C4]" /> Recent Submissions
-            </h3>
-            <div className="space-y-3">
-              {progressSummary.recent_submissions.map((sub) => (
-                <div key={sub.id} className="flex items-center justify-between p-4 rounded-md bg-[rgba(186,214,247,0.02)] border border-[rgba(186,215,247,0.12)] text-xs">
-                  <div className="flex items-center gap-3">
-                    {sub.passed ? (
-                      <span className="w-6 h-6 rounded-full bg-[rgba(186,214,247,0.1)] text-[#F0F6FF] border border-[rgba(186,215,247,0.2)] flex items-center justify-center font-bold">✓</span>
-                    ) : (
-                      <span className="w-6 h-6 rounded-full bg-red-500/10 text-red-400 border border-red-500/30 flex items-center justify-center font-bold">✕</span>
-                    )}
-                    <div>
-                      <span className="font-medium text-[#F0F6FF] block">Challenge #{sub.challenge_id}</span>
-                      <span className="text-[11px] text-[#526884] font-mono">{new Date(sub.created_at).toLocaleString()}</span>
-                    </div>
-                  </div>
-                  <span className={`font-mono font-bold ${sub.passed ? 'text-[#8AA4C4]' : 'text-red-400'}`}>
-                    {sub.passed ? 'Passed' : 'Failed'} ({sub.execution_time_ms}ms)
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

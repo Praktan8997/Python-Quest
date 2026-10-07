@@ -75,19 +75,11 @@ export const Navbar = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           {user ? (
             <>
-              {/* Streak Pill */}
-              <div className="flex items-center gap-1.5 bg-[rgba(186,214,247,0.03)] border border-[rgba(186,215,247,0.12)] px-3 py-1.5 rounded-full text-[#F0F6FF] text-xs font-mono">
-                <Flame className="w-3.5 h-3.5 text-[#663af3] fill-[#663af3]" />
-                <span>{user?.current_streak || 1}d Streak</span>
-              </div>
 
 
 
-              {/* Level Pill - Void Violet Badge */}
-              <div className="hidden sm:flex items-center gap-1.5 bg-[#663af3] text-white px-3.5 py-1.5 rounded-md text-xs font-semibold shadow-[0_0_15px_rgba(102,58,243,0.4)]">
-                <User className="w-3.5 h-3.5" />
-                <span>Level {user?.level || 1}</span>
-              </div>
+
+
             </>
           ) : (
             <Link
