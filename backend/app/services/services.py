@@ -150,6 +150,9 @@ async def execute_code_remote(code: str, test_cases: list) -> dict:
             resp = await client.post(settings.CODE_EXECUTION_URL, json=payload)
             if resp.status_code == 200:
                 return resp.json()
+            elif resp.status_code in (502, 503, 504):
+                # Fallback to local execution if the remote service is down
+                return fallback_local_execution(code, test_cases)
             else:
                 return {
                     "success": False,
