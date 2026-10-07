@@ -5,6 +5,8 @@ from app.core.config import settings
 db_url = settings.DATABASE_URL
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
+if db_url.startswith("postgresql+psycopg://"):
+    db_url = db_url.replace("postgresql+psycopg://", "postgresql://", 1)
 
 # Handle SQLite specific connect args if needed
 connect_args = {}
